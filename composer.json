@@ -1,23 +1,23 @@
 {
-    "name": "goapptiv/pulse",
-    "description": "A Laravel package for managing application level monitoring",
-    "autoload": {
-        "psr-4": {
-            "Goapptiv\\Pulse\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "srinivasinumarthi",
-            "email": "srinivas.inumarthi@goapptiv.com"
-        }
-    ],
-    "require": {},
-    "extra": {
-        "laravel": {
-            "providers": [
-                "GoApptiv\\Pulse\\Providers\\PulseServiceProvider"
-            ]
-        }
+  "name": "goapptiv/pulse",
+  "description": "A Laravel package for managing application level monitoring",
+  "autoload": {
+    "psr-4": {
+      "Goapptiv\\Pulse\\": "src/"
     }
+  },
+  "authors": [
+    {
+      "name": "srinivasinumarthi",
+      "email": "srinivas.inumarthi@goapptiv.com"
+    }
+  ],
+  "require": {},
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Goapptiv\\Pulse\\Providers\\PulseServiceProvider"
+      ]
+    }
+  }
 }

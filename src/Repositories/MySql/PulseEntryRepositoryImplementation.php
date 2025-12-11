@@ -20,4 +20,17 @@ class PulseEntryRepositoryImplementation extends  MySqlBaseRepository implements
     {
         return PulseEntry::where('id', $id)->first();
     }
+
+    /**
+     * Update the status of a pulse entry by id
+     * 
+     * @param int $id
+     * @param string $status
+     * 
+     * @return void
+     */
+    public function updateStatusById(int $id, string $status)
+    {
+        return PulseEntry::where('id', $id)->update(['status' => $status]);
+    }
 }

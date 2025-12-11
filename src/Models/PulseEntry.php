@@ -2,6 +2,7 @@
 
 namespace Goapptiv\Pulse\Models;
 
+use Goapptiv\Pulse\Constants;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,6 +26,8 @@ class PulseEntry extends Model
      */
     public function scopeForFilterByTypeAndKey($query, $type, $keyAlias)
     {
+        $interval = (int) env('PULSE_CRON_INTERVAL', 10);
+        
         return $query->select([
             'id',
             'timestamp',
@@ -35,9 +38,10 @@ class PulseEntry extends Model
         ])
         ->where('type', $type)
         ->whereBetween('timestamp', [
-            now()->subMinutes(100)->getTimestamp(),
+            now()->subMinutes($interval)->getTimestamp(),
             now()->getTimestamp(),
         ])
+        ->where('status',Constants::$PENDING)
         ->orderBy('timestamp');
     }
 }

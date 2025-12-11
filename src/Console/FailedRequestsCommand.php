@@ -30,9 +30,8 @@ class FailedRequestsCommand extends Command
     public function handle()
     {
         Log::info('Running slow request command');
-
         $requests = PulseEntry::forFilterByTypeAndKey(Constants::$FAILED_REQUEST,'exception')->get();
-        $failedRequests = $requests->groupBy('exception')->filter(fn($group) => $group->count() > Constants::$SLOW_REQUEST_THRESHOLD)->map(fn($group) => $group->first()); 
+        $failedRequests = $requests->groupBy('exception')->filter(fn($group) => $group->count() > env('FAILED_REQUEST_THRESHOLD', 4))->map(fn($group) => $group->first()); 
 
         if($failedRequests->isEmpty()) {
             Log::info('No slow requests found');

@@ -33,7 +33,7 @@ class SlowRequestsCommand extends Command
 
         $requests = PulseEntry::forFilterByTypeAndKey(Constants::$SLOW_REQUEST,'route')->get();
         
-        $slowRequests = $requests->groupBy('route')->filter(fn($group) => $group->count() > Constants::$SLOW_REQUEST_THRESHOLD)->map(fn($group) => $group->first()); 
+        $slowRequests = $requests->groupBy('route')->filter(fn($group) => $group->count() > env('SLOW_REQUEST_THRESHOLD', 4))->map(fn($group) => $group->first()); 
 
         if($slowRequests->isEmpty()) {
             Log::info('No slow requests found');

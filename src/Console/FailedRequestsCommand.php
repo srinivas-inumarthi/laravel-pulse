@@ -15,7 +15,7 @@ class FailedRequestsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:failed-requests-command';
+    protected $signature = 'fetch:failed-requests';
 
     /**
      * The console command description.

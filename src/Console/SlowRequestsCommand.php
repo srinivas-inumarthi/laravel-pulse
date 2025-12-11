@@ -15,7 +15,7 @@ class SlowRequestsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'pulse:slow-requests';
+    protected $signature = 'fetch:slow-requests';
 
     /**
      * The console command description.

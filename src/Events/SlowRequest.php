@@ -10,6 +10,8 @@ use Illuminate\Queue\SerializesModels;
 class SlowRequest
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public static $SLOW_REQUEST_EVENT = 'SLOW_REQUEST_EVENT';
     
 
     /**

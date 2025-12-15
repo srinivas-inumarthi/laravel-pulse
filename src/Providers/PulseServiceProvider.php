@@ -33,6 +33,11 @@ class PulseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->publishes([
+            __DIR__ . '/../../database/migrations' => database_path('migrations'),
+        ], 'laravel-pulse-migrations');
+
+
         // Routes
         $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
 

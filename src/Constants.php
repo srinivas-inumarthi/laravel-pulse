@@ -13,4 +13,6 @@ class Constants
 
     public static $PROCESSED = 'processed';
 
+    public static $ACTIVE = 'active';
+
 }

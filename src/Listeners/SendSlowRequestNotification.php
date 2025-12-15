@@ -3,6 +3,7 @@
 namespace Goapptiv\Pulse\Listeners;
 
 use Goapptiv\Pulse\Utils;
+use Illuminate\Support\Arr;
 use Goapptiv\Pulse\Constants;
 use Illuminate\Support\Facades\Log;
 use Goapptiv\Pulse\Events\SlowRequest;
@@ -43,7 +44,7 @@ class SendSlowRequestNotification
             env('PULSE_TO_EMAIL'),
             $eventComminication->email_template,
             collect(
-                Utils::mapVariables(json_decode($eventComminication->email_variables, true), $this->getVariables($eventComminication, $event))
+                Utils::mapVariables(json_decode($eventComminication->email_variables, true), $this->getVariables($request, $event))
             )
         );
 
@@ -59,18 +60,18 @@ class SendSlowRequestNotification
      *
      * @return array
      */
-    private function getVariables($eventComminication, $event)
+    private function getVariables($request, $event)
     {
         $interval = (int) env('PULSE_CRON_INTERVAL', 10);
-
+        $keyData = json_decode($request->key, true) ?? [];
         return [
-            "FROM_TIME" => now()->subMinutes($interval)->getTimestamp() ,
-            "TO_TIME" => now()->getTimestamp(),
-            "ENDPOINT" => json_decode($eventComminication->key, true)[1],
-            "METHOD" => json_decode($eventComminication->key, true)[0],
-            "COUNT" => $event->count,
-            "THRESHOLD_MS" => env('SLOW_REQUEST_THRESHOLD', 4),
-            "DASHBOARD_URL" => env('PULSE_DASHBOARD_URL')
+            "from_time" => now('Asia/Kolkata')->subMinutes($interval)->format('h:i A'),
+            "to_time"   => now('Asia/Kolkata')->format('h:i A'),
+            "endpoint" => url(Arr::get($keyData, 1, 'N/A')),
+            "method" => Arr::get($keyData, 0, ''),
+            "count" => $event->count,
+            "threshold_min" => env('SLOW_REQUEST_THRESHOLD', 4),
+            "dashboard_url" =>url('pulse')
         ];
     }
 }

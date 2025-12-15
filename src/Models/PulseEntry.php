@@ -16,6 +16,13 @@ class PulseEntry extends Model
     public static $TABLE = 'pulse_entries';
 
     /**
+     * Remove timestamp
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Get the base query for a given type and key path
      * 
      * @param  \Illuminate\Database\Eloquent\Builder  $query

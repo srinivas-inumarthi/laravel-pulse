@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOauthTokensTable extends Migration
+class CreatePulseEventCommunicationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -24,7 +24,7 @@ class CreateOauthTokensTable extends Migration
             $table->longtext("sms_variables")->nullable();
             $table->longtext("email_variables")->nullable();
             $table->longtext('whatsapp_variables')->nullable();
-            $table->enum('status', Constants::$PENDING);
+            $table->string('status')->default(Constants::$PENDING);
             $table->timestamps();
         });
     }

@@ -32,7 +32,7 @@ class SendSlowRequestNotification
         $request = $this->pulseEntryRepository->findById($event->id);
 
         $eventComminication = $this->pulseEventCommunicationRepository->findByEventAndStatus(SlowRequest::$SLOW_REQUEST_EVENT, Constants::$ACTIVE);
-        if(empty($comminication)) {
+        if(empty($eventComminication)) {
             Log::info("No communication found for slow request notification");
             return;
         }

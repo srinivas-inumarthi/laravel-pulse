@@ -25,7 +25,7 @@
   "repositories": [
     {
       "type": "git",
-      "url": "https://jay-gothi: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@github.com/GoApptiv/communication-package-laravel"
+      "url": "https://github.com/GoApptiv/communication-package-laravel"
     }
   ]
 }

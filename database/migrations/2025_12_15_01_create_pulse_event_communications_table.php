@@ -24,7 +24,7 @@ class CreatePulseEventCommunicationsTable extends Migration
             $table->longtext("sms_variables")->nullable();
             $table->longtext("email_variables")->nullable();
             $table->longtext('whatsapp_variables')->nullable();
-            $table->string('status')->default(Constants::$PENDING);
+            $table->enum('status', Constants::$STATUSES)->default(Constants::$ACTIVE);
             $table->timestamps();
         });
     }

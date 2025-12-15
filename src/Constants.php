@@ -15,4 +15,18 @@ class Constants
 
     public static $ACTIVE = 'active';
 
+    public static $INACTIVE = 'inactive';
+
+    public static $STATUSES = [];
+
+    /**
+     * Initialize all the Constants
+     */
+    public static function init()
+    {
+        self::$STATUSES = [
+            self::$ACTIVE,
+            self::$INACTIVE
+        ];
+    }
 }

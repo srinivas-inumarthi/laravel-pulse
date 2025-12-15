@@ -43,7 +43,7 @@ class SendSlowRequestNotification
             env('PULSE_TO_EMAIL'),
             $eventComminication->email_template,
             collect(
-                Utils::mapVariables(json_decode($eventComminication->email_variables, true), $this->getVariables($eventComminication))
+                Utils::mapVariables(json_decode($eventComminication->email_variables, true), $this->getVariables($eventComminication, $event))
             )
         );
 
@@ -59,7 +59,7 @@ class SendSlowRequestNotification
      *
      * @return array
      */
-    private function getVariables($eventComminication)
+    private function getVariables($eventComminication, $event)
     {
         $interval = (int) env('PULSE_CRON_INTERVAL', 10);
 

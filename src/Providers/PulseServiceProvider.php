@@ -9,6 +9,8 @@ use Goapptiv\Pulse\Console\SlowRequestsCommand;
 use Goapptiv\Pulse\Listeners\SendSlowRequestNotification;
 use Goapptiv\Pulse\Repositories\PulseEntryRepositoryInterface;
 use Goapptiv\Pulse\Repositories\MySql\PulseEntryRepositoryImplementation;
+use Goapptiv\Pulse\Repositories\PulseEventCommunicationRepositoryInterface;
+use Goapptiv\Pulse\Repositories\MySql\PulseEventCommunicationRepositoryImplementation;
 
 class PulseServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,7 @@ class PulseServiceProvider extends ServiceProvider
         ]);
 
         $this->app->bind(PulseEntryRepositoryInterface::class, PulseEntryRepositoryImplementation::class);
+        $this->app->bind(PulseEventCommunicationRepositoryInterface::class,PulseEventCommunicationRepositoryImplementation::class);
     }
 
     /**

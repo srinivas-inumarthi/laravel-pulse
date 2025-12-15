@@ -47,7 +47,7 @@ class SlowRequestsCommand extends Command
             return;
         }
         foreach ($slowRequests as $request) {
-            SlowRequest::dispatch($request->id);
+            SlowRequest::dispatch($request->id, $request->count);
         }
     }
 }

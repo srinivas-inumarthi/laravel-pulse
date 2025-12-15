@@ -68,7 +68,7 @@ class SendSlowRequestNotification
             "TO_TIME" => now()->getTimestamp(),
             "ENDPOINT" => json_decode($eventComminication->key, true)[1],
             "METHOD" => json_decode($eventComminication->key, true)[0],
-            "COUNT" => env('SLOW_REQUEST_THRESHOLD'),
+            "COUNT" => $event->count,
             "THRESHOLD_MS" => env('SLOW_REQUEST_THRESHOLD', 4),
             "DASHBOARD_URL" => env('PULSE_DASHBOARD_URL')
         ];

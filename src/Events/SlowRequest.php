@@ -18,7 +18,8 @@ class SlowRequest
      * Create a new event instance.
      */
     public function __construct(
-        public int $id
+        public int $id,
+        public int $count
     ) {
         
     }

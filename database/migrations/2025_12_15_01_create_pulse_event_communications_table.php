@@ -14,7 +14,7 @@ class CreatePulseEventCommunicationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('PULSE_EVENT_COMMUNICATIONS', function (Blueprint $table) {
+        Schema::create('pulse_event_communications', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->string('event');

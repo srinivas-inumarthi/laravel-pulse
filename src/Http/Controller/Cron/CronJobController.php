@@ -16,7 +16,7 @@ class CronJobController extends Controller
      */
     public function fetchSlowRequests()
     {
-        Artisan::call('pulse:slow-requests');
+        Artisan::call('fetch:slow-requests');
         return RestResponse::done('message', 'success');
     }
 }

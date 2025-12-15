@@ -46,7 +46,7 @@ class SendSlowRequestNotification
                 Utils::mapVariables(json_decode($eventComminication->email_variables, true), $this->getVariables($eventComminication))
             )
         );
-        dd($emailData);
+
         Log::info("Sending slow request email notification");
         EmailCommunication::sendEmail($emailData);
 

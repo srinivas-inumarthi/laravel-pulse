@@ -30,3 +30,5 @@ class Constants
         ];
     }
 }
+
+Constants::init();

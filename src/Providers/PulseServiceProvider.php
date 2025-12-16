@@ -24,11 +24,6 @@ class PulseServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->commands([
-            SlowRequestsCommand::class,
-            FailedRequestsCommand::class
-        ]);
-        
         $this->app->bind(PulseEntryRepositoryInterface::class, PulseEntryRepositoryImplementation::class);
         $this->app->bind(PulseEventCommunicationRepositoryInterface::class,PulseEventCommunicationRepositoryImplementation::class);
     }

@@ -29,7 +29,7 @@ class FailedRequestsCommand extends Command
      */
     public function handle()
     {
-        Log::info('Running slow request command');
+        Log::info('Running failed request command');
         $requests = PulseEntry::forFilterByTypeAndKey(Constants::$FAILED_REQUEST,'exception')->get();
         $failedRequests = $requests
                             ->groupBy('exception')

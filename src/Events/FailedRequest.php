@@ -6,11 +6,11 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SlowRequest
+class FailedRequest
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public static $SLOW_REQUEST_EVENT = 'SLOW_REQUEST_EVENT';
+    public static $FAILED_REQUEST_EVENT = 'FAILED_REQUEST_EVENT';
     
 
     /**

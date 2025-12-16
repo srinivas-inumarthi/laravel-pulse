@@ -4,9 +4,12 @@ namespace Goapptiv\Pulse\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Goapptiv\Pulse\Events\SlowRequest;
+use Goapptiv\Pulse\Events\FailedRequest;
 use Illuminate\Support\ServiceProvider;
 use Goapptiv\Pulse\Console\SlowRequestsCommand;
+use Goapptiv\Pulse\Console\FailedRequestsCommand;
 use Goapptiv\Pulse\Listeners\SendSlowRequestNotification;
+use Goapptiv\Pulse\Listeners\SendFailedRequestNotification;
 use Goapptiv\Pulse\Repositories\PulseEntryRepositoryInterface;
 use Goapptiv\Pulse\Repositories\MySql\PulseEntryRepositoryImplementation;
 use Goapptiv\Pulse\Repositories\PulseEventCommunicationRepositoryInterface;
@@ -22,7 +25,8 @@ class PulseServiceProvider extends ServiceProvider
     public function register()
     {
         $this->commands([
-            SlowRequestsCommand::class
+            SlowRequestsCommand::class,
+            FailedRequestsCommand::class
         ]);
 
         $this->app->bind(PulseEntryRepositoryInterface::class, PulseEntryRepositoryImplementation::class);
@@ -53,5 +57,6 @@ class PulseServiceProvider extends ServiceProvider
 
         // Events
         Event::listen(SlowRequest::class, SendSlowRequestNotification::class);
+        Event::listen(FailedRequest::class, SendFailedRequestNotification::class);
     }
 }

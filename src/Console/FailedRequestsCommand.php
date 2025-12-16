@@ -4,7 +4,7 @@ namespace Goapptiv\Pulse\Commands;
 
 use Goapptiv\Pulse\Constants;
 use Goapptiv\Pulse\Models\PulseEntry;
-use Goapptiv\Pulse\Events\SlowRequest;
+use Goapptiv\Pulse\Events\FailedRequest;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -31,15 +31,22 @@ class FailedRequestsCommand extends Command
     {
         Log::info('Running slow request command');
         $requests = PulseEntry::forFilterByTypeAndKey(Constants::$FAILED_REQUEST,'exception')->get();
-        $failedRequests = $requests->groupBy('exception')->filter(fn($group) => $group->count() > env('FAILED_REQUEST_THRESHOLD', 4))->map(fn($group) => $group->first()); 
+        $failedRequests = $requests
+                            ->groupBy('exception')
+                            ->filter(fn ($group) => $group->count() > env('FAILED_REQUEST_THRESHOLD', 4))
+                            ->map(function ($group) {
+                                $record = $group->first();
+                                $record->count = $group->count();
+                                return $record;
+                            }); 
 
         if($failedRequests->isEmpty()) {
-            Log::info('No slow requests found');
+            Log::info('No failed requests found');
             return;
         }
         
         foreach ($failedRequests as $request) {
-            SlowRequest::dispatch($request->id);
+            FailedRequest::dispatch($request->id,$request->count);
         }
     }
 }

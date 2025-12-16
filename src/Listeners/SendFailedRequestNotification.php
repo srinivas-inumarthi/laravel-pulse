@@ -6,14 +6,14 @@ use Goapptiv\Pulse\Utils;
 use Illuminate\Support\Arr;
 use Goapptiv\Pulse\Constants;
 use Illuminate\Support\Facades\Log;
-use Goapptiv\Pulse\Events\SlowRequest;
+use Goapptiv\Pulse\Events\FailedRequest;
 use GoApptiv\Communication\EmailCommunication;
 use GoApptiv\Communication\Models\Email\Email;
 use Goapptiv\Pulse\Repositories\PulseEntryRepositoryInterface;
 use Goapptiv\Pulse\Repositories\PulseEventCommunicationRepositoryInterface;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendSlowRequestNotification implements ShouldQueue
+class SendFailedRequestNotification implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -28,12 +28,12 @@ class SendSlowRequestNotification implements ShouldQueue
     /**
      * Handle the event.
      */
-    public function handle(SlowRequest $event): void
+    public function handle(FailedRequest $event): void
     {
         Log::info("Sending slow request notification by :",['id' => $event->id]);
         $request = $this->pulseEntryRepository->findById($event->id);
 
-        $eventComminication = $this->pulseEventCommunicationRepository->findByEventAndStatus(SlowRequest::$SLOW_REQUEST_EVENT, Constants::$ACTIVE);
+        $eventComminication = $this->pulseEventCommunicationRepository->findByEventAndStatus(FailedRequest::$FAILED_REQUEST_EVENT, Constants::$ACTIVE);
         if(empty($eventComminication)) {
             Log::info("No communication found for slow request notification");
             return;

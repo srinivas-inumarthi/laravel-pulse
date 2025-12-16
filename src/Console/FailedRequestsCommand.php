@@ -1,6 +1,6 @@
 <?php
 
-namespace Goapptiv\Pulse\Commands;
+namespace Goapptiv\Pulse\Console;
 
 use Goapptiv\Pulse\Constants;
 use Goapptiv\Pulse\Models\PulseEntry;

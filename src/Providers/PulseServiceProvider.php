@@ -24,6 +24,15 @@ class PulseServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Commands
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                SlowRequestsCommand::class,
+                FailedRequestsCommand::class
+            ]);
+        }
+
+        // Repositories
         $this->app->bind(PulseEntryRepositoryInterface::class, PulseEntryRepositoryImplementation::class);
         $this->app->bind(PulseEventCommunicationRepositoryInterface::class,PulseEventCommunicationRepositoryImplementation::class);
     }
@@ -42,14 +51,6 @@ class PulseServiceProvider extends ServiceProvider
 
         // Routes
         $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
-
-        // Commands
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                SlowRequestsCommand::class,
-                FailedRequestsCommand::class
-            ]);
-        }
 
         // Events
         Event::listen(SlowRequest::class, SendSlowRequestNotification::class);

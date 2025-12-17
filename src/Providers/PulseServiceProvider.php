@@ -48,8 +48,6 @@ class PulseServiceProvider extends ServiceProvider
                 SlowRequestsCommand::class,
                 FailedRequestsCommand::class,
             ]);
-    
-            return;
         }
 
         // Events

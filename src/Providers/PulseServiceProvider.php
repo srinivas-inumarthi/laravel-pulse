@@ -39,16 +39,18 @@ class PulseServiceProvider extends ServiceProvider
             __DIR__ . '/../../database/migrations' => database_path('migrations'),
         ], 'laravel-pulse-migrations');
 
-        // Routes
-        $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
-
         // Commands
         if ($this->app->runningInConsole()) {
             $this->commands([
                 SlowRequestsCommand::class,
                 FailedRequestsCommand::class,
             ]);
+
+            return;
         }
+
+        // Routes
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
 
         // Events
         Event::listen(SlowRequest::class, SendSlowRequestNotification::class);

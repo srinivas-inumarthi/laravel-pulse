@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Event;
 use Goapptiv\Pulse\Events\SlowRequest;
 use Goapptiv\Pulse\Events\FailedRequest;
 use Illuminate\Support\ServiceProvider;
+use Goapptiv\Pulse\Console\SlowRequestsCommand;
+use Goapptiv\Pulse\Console\FailedRequestsCommand;
 use Goapptiv\Pulse\Listeners\SendSlowRequestNotification;
 use Goapptiv\Pulse\Listeners\SendFailedRequestNotification;
 use Goapptiv\Pulse\Repositories\PulseEntryRepositoryInterface;
@@ -22,7 +24,6 @@ class PulseServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Repositories
         $this->app->bind(PulseEntryRepositoryInterface::class, PulseEntryRepositoryImplementation::class);
         $this->app->bind(PulseEventCommunicationRepositoryInterface::class,PulseEventCommunicationRepositoryImplementation::class);
     }
@@ -40,6 +41,12 @@ class PulseServiceProvider extends ServiceProvider
 
         // Routes
         $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
+
+        // Commands
+        $this->commands([
+            SlowRequestsCommand::class,
+            FailedRequestsCommand::class
+        ]);
 
         // Events
         Event::listen(SlowRequest::class, SendSlowRequestNotification::class);

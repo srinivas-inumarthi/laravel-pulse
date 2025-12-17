@@ -40,14 +40,10 @@ class PulseServiceProvider extends ServiceProvider
         ], 'laravel-pulse-migrations');
 
         // Commands
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                SlowRequestsCommand::class,
-                FailedRequestsCommand::class,
-            ]);
-
-            return;
-        }
+        $this->commands([
+            SlowRequestsCommand::class,
+            FailedRequestsCommand::class,
+        ]);
 
         // Routes
         $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');

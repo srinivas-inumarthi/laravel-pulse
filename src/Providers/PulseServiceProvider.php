@@ -43,10 +43,14 @@ class PulseServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
 
         // Commands
-        $this->commands([
-            SlowRequestsCommand::class,
-            FailedRequestsCommand::class
-        ]);
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                SlowRequestsCommand::class,
+                FailedRequestsCommand::class,
+            ]);
+    
+            return;
+        }
 
         // Events
         Event::listen(SlowRequest::class, SendSlowRequestNotification::class);

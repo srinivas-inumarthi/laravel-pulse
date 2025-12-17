@@ -19,4 +19,15 @@ class CronJobController extends Controller
         Artisan::call('fetch:slow-requests');
         return RestResponse::done('message', 'success');
     }
+
+    /**
+     * Fetch failed requests
+     * 
+     * @return JsonResponse
+     */
+    public function fetchFailedRequests()
+    {
+        Artisan::call('fetch:failed-requests');
+        return RestResponse::done('message', 'success');
+    }
 }

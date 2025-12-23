@@ -30,16 +30,16 @@ class SendFailedRequestNotification implements ShouldQueue
      */
     public function handle(FailedRequest $event): void
     {
-        Log::info("Sending slow request notification by :",['id' => $event->id]);
+        Log::info("Sending failed request notification by :",['id' => $event->id]);
         $request = $this->pulseEntryRepository->findById($event->id);
 
         $eventComminication = $this->pulseEventCommunicationRepository->findByEventAndStatus(FailedRequest::$FAILED_REQUEST_EVENT, Constants::$ACTIVE);
         if(empty($eventComminication)) {
-            Log::info("No communication found for slow request notification");
+            Log::info("No communication found for failed request notification");
             return;
         }
 
-        Log::info("Preparing to send slow request email notification data");
+        Log::info("Preparing to send failed request email notification data");
         $emailData = new Email(
             env('PULSE_FROM_EMAIL'),
             env('PULSE_TO_EMAIL'),
@@ -49,7 +49,7 @@ class SendFailedRequestNotification implements ShouldQueue
             )
         );
 
-        Log::info("Sending slow request email notification");
+        Log::info("Sending failed request email notification");
         EmailCommunication::sendEmail($emailData);
 
         Log::info("Updating status to processed by :",['id' => $request->id]);
@@ -68,10 +68,10 @@ class SendFailedRequestNotification implements ShouldQueue
         return [
             "from_time" => now('Asia/Kolkata')->subMinutes($interval)->format('h:i A'),
             "to_time"   => now('Asia/Kolkata')->format('h:i A'),
-            "endpoint" => url(Arr::get($keyData, 1, 'N/A')),
-            "method" => Arr::get($keyData, 0, ''),
+            "exception" => url(Arr::get($keyData, 1, 'N/A')),
+            "type" => Arr::get($keyData, 0, ''),
             "count" => $event->count,
-            "threshold_min" => env('SLOW_REQUEST_THRESHOLD', 4),
+            "threshold_min" => env('FAILED_REQUEST_THRESHOLD', 4),
             "dashboard_url" =>url('pulse')
         ];
     }
